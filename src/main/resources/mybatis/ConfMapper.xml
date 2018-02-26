@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 等同于package -->
+<mapper namespace="com.rcloud.erp.dao.UserDAO">
+
+    <!-- 适用于表中大量字段和类的属性不匹配的情况，如果只是少量，用as即可 -->
+    <resultMap type="com.rcloud.erp.entity.User" id="queryUserByIdMap">
+        <id column="id" property="user_id" />
+        <result column="username" property="username" />
+        <result column="birthday" property="birthday" />
+        <result column="sex" property="sex" />
+        <result column="address" property="address_" />
+    </resultMap>
+    <!-- 根据id查询用户信息 -->
+    <select id="queryUserById" parameterType="int" resultMap="queryUserByIdMap">
+        select user_id ,username,birthday,sex,address from user where id=#{user_id}
+    </select>
+
+    <insert id="add" parameterType="com.rcloud.erp.entity.User">
+    insert into
+    user(user_id,username,birthday,sex,address)
+    values(#{user_id},#{username},#{birthday},#{sex},#{address})
+    </insert>
+
+    <!--&lt;!&ndash; 根据id查询用户信息 如果User的属性是id，数据库是user_id那么应该在user_id后面加上as id &ndash;&gt;-->
+    <!--<select id="queryUserById" parameterType="int" resultType="com.rcloud.erp.entity.User">-->
+        <!--select user_id,username,birthday,sex,address from user where-->
+        <!--user_id=#{user_id}-->
+    <!--</select>-->
+
+    <!--&lt;!&ndash; id: sql语句的唯一标识 parameterType：参数类型 resultType：单条记录的返回值类型 查询所有用户信息 &ndash;&gt;-->
+
+    <!--<select id="queryUserAll" resultType="com.rcloud.erp.entity.User">-->
+        <!--select-->
+        <!--user_id,username,birthday,sex,address from user-->
+    <!--</select>-->
+
+    <!--&lt;!&ndash; 添加 &ndash;&gt;-->
+    <!--<insert id="saveUser" parameterType="com.rcloud.erp.entity.User">-->
+        <!--insert into-->
+        <!--user(username,birthday,sex,address)-->
+        <!--values(#{username},#{birthday},#{sex},#{address})-->
+    <!--</insert>-->
+
+    <!--&lt;!&ndash; 添加 并返回主键ID useGeneratedKeys="true" keyProperty="user_id" 设置返回的主键自动添加到实体类的哪一个属性中 &ndash;&gt;-->
+    <!--<insert id="saveUserForId" parameterType="com.rcloud.erp.entity.User"-->
+            <!--useGeneratedKeys="true" keyProperty="user_id">-->
+        <!--insert into-->
+        <!--user(username,birthday,sex,address)-->
+        <!--values(#{username},#{birthday},#{sex},#{address})-->
+    <!--</insert>-->
+
+    <!--&lt;!&ndash; 修改 &ndash;&gt;-->
+    <!--<update id="updateUser" parameterType="com.rcloud.erp.entity.User">-->
+        <!--update user set-->
+        <!--username=#{username} where user_id=#{user_id}-->
+    <!--</update>-->
+
+    <!--&lt;!&ndash; 删除 &ndash;&gt;-->
+    <!--<delete id="delUser" parameterType="int">-->
+        <!--delete from user where-->
+        <!--user_id=#{id}-->
+    <!--</delete>-->
+
+
+    <!--&lt;!&ndash; 批量删除 传入集合list &ndash;&gt;-->
+    <!--<delete id="batchDelUser" parameterType="java.util.List">-->
+        <!--delete from user where user_id in-->
+        <!--<foreach collection="list" open="(" separator="," close=")"-->
+                 <!--item="user_id">-->
+            <!--#{user_id}-->
+        <!--</foreach>-->
+    <!--</delete>-->
+
+    <!--&lt;!&ndash; 添加、修改、删除、批量删除 根据ID查询 查询所有 动态查询 &ndash;&gt;-->
+
+    <!--&lt;!&ndash; 动态sql 综合查询 姓名 地址 编号 &ndash;&gt;-->
+    <!--<select id="integratedQuery" parameterType="com.rcloud.erp.entity.User"-->
+            <!--resultType="com.rcloud.erp.entity.User">-->
+        <!--select user_id,username,birthday,sex,address from user-->
+        <!--<where>-->
+            <!--<if test="username!=null and username!=''">-->
+                <!--username like concat('%',#{username},'%')-->
+
+            <!--</if>-->
+            <!--<if test="address!=null and address!=''">-->
+                <!--and address=#{address}-->
+            <!--</if>-->
+        <!--</where>-->
+
+    <!--</select>-->
+
+    <!--&lt;!&ndash; 分页查询 参数map: 取map的key &ndash;&gt;-->
+    <!--<select id="queryUserLimit" parameterType="java.util.Map"-->
+            <!--resultType="com.rcloud.erp.entity.User">-->
+        <!--select user_id,username,birthday,sex,address from user limit-->
+        <!--#{startItem},#{endItem};-->
+    <!--</select>-->
+
+
+
+
+
+    <!--&lt;!&ndash; 访问实体对象的子对象中的属性 &ndash;&gt;-->
+    <!--&lt;!&ndash;<select id="queryUserChildObj" parameterType="com.rcloud.erp.entity.UserVO"&ndash;&gt;-->
+            <!--&lt;!&ndash;resultType="com.rcloud.erp.entity.User">&ndash;&gt;-->
+        <!--&lt;!&ndash;select user_id,username,birthday,sex,address&ndash;&gt;-->
+        <!--&lt;!&ndash;from user&ndash;&gt;-->
+        <!--&lt;!&ndash;where sex= #{d.sex}    &lt;!&ndash; UserVO中的子对象名称 d &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;and username like concat('%',#{user.username},'%')&ndash;&gt;-->
+    <!--&lt;!&ndash;</select>&ndash;&gt;-->
+
+    <!--&lt;!&ndash; 分页查询-->
+         <!--参数map: 取map的key-->
+ <!--&ndash;&gt;-->
+    <!--<select id="queryUserLimit" parameterType="java.util.Map" resultType="com.rcloud.erp.entity.User">-->
+        <!--select user_id,username,birthday,sex,address from user limit #{startItem},#{pageItem};-->
+    <!--</select>-->
+
+
+    <!--&lt;!&ndash;  一对一  查询所有的订单及用户名称 &ndash;&gt;-->
+    <!--&lt;!&ndash;<select id="queryOrders" resultType="com.zsrt.entity.OrdersCustom">&ndash;&gt;-->
+        <!--&lt;!&ndash;select o.*,u.username&ndash;&gt;-->
+        <!--&lt;!&ndash;from orders o,user u&ndash;&gt;-->
+        <!--&lt;!&ndash;where u.id=o.user_id&ndash;&gt;-->
+    <!--&lt;!&ndash;</select>&ndash;&gt;-->
+
+
+
+    <!--<resultMap type="com.zsrt.entity.Orders" id="ordersMap">-->
+        <!--<id column="id" property="id"/>-->
+        <!--<result column="user_id" property="user_id"/>-->
+        <!--<result column="number" property="number"/>-->
+        <!--<result column="createtime" property="createtime"/>-->
+        <!--<result column="note" property="note"/>-->
+        <!--&lt;!&ndash; 设置订单和用户的一对一映射关系 &ndash;&gt;-->
+        <!--<association property="user" javaType="com.rcloud.erp.entity.User">-->
+            <!--<id column="id" property="userid"/>-->
+            <!--<result column="username" property="username"/>-->
+        <!--</association>-->
+    <!--</resultMap>-->
+    <!--&lt;!&ndash; 一对一  resultMap方式实现 &ndash;&gt;-->
+    <!--<select id="queryOrdersMap" resultMap="ordersMap">-->
+        <!--select o.*,u.username-->
+        <!--from orders o,user u-->
+        <!--where u.id=o.user_id-->
+    <!--</select>-->
+
+</mapper>
