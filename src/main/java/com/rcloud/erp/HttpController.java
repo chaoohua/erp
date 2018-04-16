@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import redis.clients.jedis.BinaryJedisCommands;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +58,16 @@ public class HttpController {
         RedisUtil.set("11","111");
         RedisUtil.get("11");
        // this.userServices.addUser(user);
+        return baseDetail;
+    }
+    @RequestMapping(value = "/push/ioscer/get",headers = "Accept=application/json")
+    @ResponseBody
+    public Map<String,String > getIosCerInfo(HttpServletRequest request,@RequestBody String s) throws IOException {
+        Map<String,String > baseDetail = new HashMap<String, String>();
+
+
+
+        //833096L 538765 266964（aws）
         return baseDetail;
     }
 
