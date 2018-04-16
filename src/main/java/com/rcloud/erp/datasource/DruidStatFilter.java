@@ -8,8 +8,7 @@ import com.alibaba.druid.support.http.WebStatFilter;
 /**
  * Druid的StatFilter
  *
- * @author   华超(365384722)
- * @date     2016年3月17日
+ * @author   华超(2018)
  */
 @WebFilter(filterName="druidWebStatFilter",urlPatterns="/*",
         initParams={
